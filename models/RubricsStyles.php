@@ -10,6 +10,9 @@ use Yii;
  * @property integer $id
  * @property integer $rubric_id
  * @property integer $style_id
+ *
+ * @property DbStyle $style
+ * @property DbRubric $rubric
  */
 class RubricsStyles extends \yii\db\ActiveRecord
 {
@@ -42,5 +45,21 @@ class RubricsStyles extends \yii\db\ActiveRecord
             'rubric_id' => 'Rubric ID',
             'style_id' => 'Style ID',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStyle()
+    {
+        return $this->hasOne(DbStyle::className(), ['id' => 'style_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRubric()
+    {
+        return $this->hasOne(DbRubric::className(), ['id' => 'rubric_id']);
     }
 }

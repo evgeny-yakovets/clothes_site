@@ -11,6 +11,8 @@ use Yii;
  * @property string $title
  * @property string $image
  * @property string $description
+ *
+ * @property DbRubricsStyles[] $dbRubricsStyles
  */
 class Rubric extends \yii\db\ActiveRecord
 {
@@ -30,10 +32,7 @@ class Rubric extends \yii\db\ActiveRecord
         return [
             [['title', 'image', 'description'], 'required'],
             [['title'], 'string', 'max' => 20],
-            [['description'], 'string', 'max' => 255],
-            [['image'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg, pdf']
-            //[['file'], 'file', 'extensions' => 'png, jpg'],
-            //[['del_img'], 'boolean'],
+            [['image', 'description'], 'string', 'max' => 255]
         ];
     }
 
@@ -50,13 +49,11 @@ class Rubric extends \yii\db\ActiveRecord
         ];
     }
 
-    public function upload()
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDbRubricsStyles()
     {
-        if ($this->validate()) {
-            $this->image->saveAs('uploads/' . $this->image->baseName . '.' . $this->image->extension);
-            return true;
-        } else {
-            return false;
-        }
+        return $this->hasMany(DbRubricsStyles::className(), ['rubric_id' => 'id']);
     }
 }

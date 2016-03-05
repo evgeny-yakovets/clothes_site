@@ -30,10 +30,25 @@ class StyleController extends Controller
      * Lists all Style models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($id = null)
     {
+        $query = null;
+        if($id)
+        {
+            $query = Style::find()
+                ->select('db_style.*')
+                ->joinWith('DbRubricsStyles')
+                ->joinWith('db_rubric')
+                ->where(['db_rubric.id' => $id])
+                //->with('orders')
+                ->all();
+        }
+        else
+        {
+            $query = Style::find();
+        }
         $dataProvider = new ActiveDataProvider([
-            'query' => Style::find(),
+            'query' => $query,
         ]);
 
         return $this->render('index', [

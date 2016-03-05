@@ -6,11 +6,14 @@
  * Time: 12:30 PM
  */
 
-    use yii\helpers\Html;
-    use yii\helpers\HtmlPurifier;
-    ?>
+use yii\helpers\Html;
+use yii\helpers\HtmlPurifier;
+use yii\helpers\Url;
+
+
+?>
 
 <div class="news-item">
-    <h2><?= Html::a(Html::encode($model->title), 'view?id='.$model->id) ?></h2></a>
-    <?= HtmlPurifier::process($model->description) ?>
+    <h2><a href="<?php echo Yii::$app->urlManager->createUrl(['style/index', 'id' => $model->id]) ?>"><?php echo Html::encode($model->title) ?></a></h2>
+    <?= HtmlPurifier::process(Html::encode($model->description)) ?>
 </div>

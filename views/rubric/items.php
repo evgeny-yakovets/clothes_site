@@ -1,53 +1,47 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\DetailView;
+use yii\grid\GridView;
+
+/* @var $this yii\web\View */
+/* @var $dataProvider yii\data\ActiveDataProvider */
+
+use app\models\Rubric;
 use app\models\Style;
 use yii\widgets\ListView;
 use yii\data\ActiveDataProvider;
 
-/* @var $this yii\web\View */
-/* @var $model app\models\Rubric */
-
-$this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Rubrics', 'url' => ['index']];
+$this->title = 'Rubrics';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="rubric-view">
-<?php
-if(!Yii::$app->user->isGuest)
-{
+<div class="rubric-index">
 
-}
-
-?>
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
         <?php
         if(!Yii::$app->user->isGuest)
         {
-        Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']);
-        Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]);
-        }?>
+            echo Html::a('Create Rubric', ['create'], ['class' => 'btn btn-success']);
+        }
+
+        ?>
     </p>
 
     <?php
-    if(!Yii::$app->user->isGuest)
-    {
-        DetailView::widget([
-            'model' => $model,
-            'attributes' => [
+
+    if(!Yii::$app->user->isGuest) {
+        echo GridView::widget([
+            'dataProvider' => $dataProvider,
+            'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
+
                 'id',
                 'title',
                 'image',
                 'description',
+
+                ['class' => 'yii\grid\ActionColumn'],
             ],
         ]);
     }
@@ -66,6 +60,9 @@ if(!Yii::$app->user->isGuest)
             'itemView' => '_list',
         ]);
     }
+
+
+
     ?>
 
 </div>

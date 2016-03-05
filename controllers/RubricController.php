@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Rubric;
+use app\models\Style;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -46,13 +47,13 @@ class RubricController extends Controller
      * Lists all Rubric items.
      * @return mixed
      */
-    public function actionItemList()
+    public function actionItems()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Rubric::find(),
+            'query' => Style::find(),
         ]);
 
-        return $this->render('index', [
+        return $this->render('items', [
             'dataProvider' => $dataProvider,
         ]);
     }
