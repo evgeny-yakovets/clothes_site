@@ -16,6 +16,7 @@ use Yii;
  */
 class Rubric extends \yii\db\ActiveRecord
 {
+    public $file;
     /**
      * @inheritdoc
      */

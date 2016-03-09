@@ -9,6 +9,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+
 use yii\web\UploadedFile;
 
 /**
@@ -79,7 +80,28 @@ class RubricController extends Controller
     {
         $model = new Rubric();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if($model->load(Yii::$app->request->post()))
+        {
+            $file = UploadedFile::getInstance($model, 'file');
+
+            if ($file && $file->tempName) {
+                $model->file = $file;
+
+                $material_type = 'rubric/';
+
+                if(!file_exists('images/'.$material_type))
+                {
+                    mkdir('images/'.$material_type, 0777, true);
+                }
+                $dir = Yii::getAlias('images/'.$material_type);
+                $fileName = $model->file->baseName . '.' . $model->file->extension;
+                $model->file->saveAs($dir . $fileName);
+                $model->file = $fileName;
+                $model->image = '/'.$dir . $fileName;
+            }
+        }
+
+        if ($model->save()) {
             //var_dump($model);
             //die();
             return $this->redirect(['view', 'id' => $model->id]);
@@ -100,7 +122,28 @@ class RubricController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if($model->load(Yii::$app->request->post()))
+        {
+            $file = UploadedFile::getInstance($model, 'file');
+
+            if ($file && $file->tempName) {
+                $model->file = $file;
+
+                $material_type = 'rubric/';
+
+                if(!file_exists('images/'.$material_type))
+                {
+                    mkdir('images/'.$material_type, 0777, true);
+                }
+                $dir = Yii::getAlias('images/'.$material_type);
+                $fileName = $model->file->baseName . '.' . $model->file->extension;
+                $model->file->saveAs($dir . $fileName);
+                $model->file = $fileName;
+                $model->image = '/'.$dir . $fileName;
+            }
+        }
+
+        if ($model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [

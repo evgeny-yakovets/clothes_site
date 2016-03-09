@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "{{%db_style}}".
@@ -16,6 +17,10 @@ use Yii;
  */
 class Style extends \yii\db\ActiveRecord
 {
+    public $file;
+    public $del_img;
+
+
     /**
      * @inheritdoc
      */
@@ -32,7 +37,9 @@ class Style extends \yii\db\ActiveRecord
         return [
             [['title', 'image', 'description'], 'required'],
             [['title'], 'string', 'max' => 20],
-            [['image', 'description'], 'string', 'max' => 255]
+            [['image', 'description'], 'string', 'max' => 255],
+            [['file'], 'file', 'extensions' => 'png, jpg, pdf'],
+            [['del_img'], 'boolean']
         ];
     }
 

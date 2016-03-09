@@ -9,6 +9,9 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
+use yii\web\UploadedFile;
+
+
 /**
  * StyleController implements the CRUD actions for Style model.
  */
@@ -74,9 +77,33 @@ class StyleController extends Controller
     {
         $model = new Style();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if($model->load(Yii::$app->request->post()))
+        {
+            $file = UploadedFile::getInstance($model, 'file');
+
+            if ($file && $file->tempName) {
+                $model->file = $file;
+
+                $material_type = 'style/';
+
+                if(!file_exists('images/'.$material_type))
+                {
+                    mkdir('images/'.$material_type, 0777, true);
+                }
+                    $dir = Yii::getAlias('images/'.$material_type);
+                    $fileName = $model->file->baseName . '.' . $model->file->extension;
+                    $model->file->saveAs($dir . $fileName);
+                    $model->file = $fileName;
+                    $model->image = '/'.$dir . $fileName;
+                }
+        }
+
+        if ($model->save())
+        {
             return $this->redirect(['view', 'id' => $model->id]);
-        } else {
+        }
+        else
+        {
             return $this->render('create', [
                 'model' => $model,
             ]);
@@ -93,7 +120,28 @@ class StyleController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if($model->load(Yii::$app->request->post()))
+        {
+            $file = UploadedFile::getInstance($model, 'file');
+
+            if ($file && $file->tempName) {
+                $model->file = $file;
+
+                $material_type = 'style/';
+
+                if(!file_exists('images/'.$material_type))
+                {
+                    mkdir('images/'.$material_type, 0777, true);
+                }
+                $dir = Yii::getAlias('images/'.$material_type);
+                $fileName = $model->file->baseName . '.' . $model->file->extension;
+                $model->file->saveAs($dir . $fileName);
+                $model->file = $fileName;
+                $model->image = '/'.$dir . $fileName;
+            }
+        }
+
+        if ($model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
