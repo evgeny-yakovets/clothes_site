@@ -36,12 +36,8 @@ class StyleController extends Controller
         if($id)
         {
             $query = Style::find()
-                ->select('db_style.*')
-                ->joinWith('DbRubricsStyles')
-                ->joinWith('db_rubric')
-                ->where(['db_rubric.id' => $id])
-                //->with('orders')
-                ->all();
+                ->joinWith('rubricsStyles')
+                ->where(['db_rubrics_styles.rubric_id' => $id]);
         }
         else
         {
@@ -53,6 +49,7 @@ class StyleController extends Controller
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'query' => $query,
         ]);
     }
 

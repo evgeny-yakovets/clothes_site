@@ -11,8 +11,8 @@ use Yii;
  * @property integer $rubric_id
  * @property integer $style_id
  *
- * @property DbStyle $style
- * @property DbRubric $rubric
+ * @property Style $style
+ * @property Rubric $rubric
  */
 class RubricsStyles extends \yii\db\ActiveRecord
 {
@@ -52,7 +52,7 @@ class RubricsStyles extends \yii\db\ActiveRecord
      */
     public function getStyle()
     {
-        return $this->hasOne(DbStyle::className(), ['id' => 'style_id']);
+        return $this->hasOne(Style::className(), ['id' => 'style_id']);
     }
 
     /**
@@ -60,6 +60,6 @@ class RubricsStyles extends \yii\db\ActiveRecord
      */
     public function getRubric()
     {
-        return $this->hasOne(DbRubric::className(), ['id' => 'rubric_id']);
+        return $this->hasOne(Rubric::className(), ['id' => 'rubric_id']);
     }
 }

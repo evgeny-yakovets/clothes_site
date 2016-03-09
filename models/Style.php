@@ -12,7 +12,7 @@ use Yii;
  * @property string $image
  * @property string $description
  *
- * @property DbRubricsStyles[] $dbRubricsStyles
+ * @property RubricsStyles[] $rubricsStyles
  */
 class Style extends \yii\db\ActiveRecord
 {
@@ -52,8 +52,8 @@ class Style extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getDbRubricsStyles()
+    public function getRubricsStyles()
     {
-        return $this->hasMany(DbRubricsStyles::className(), ['style_id' => 'id']);
+        return $this->hasMany(RubricsStyles::className(), ['style_id' => 'id']);
     }
 }

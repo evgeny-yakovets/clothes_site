@@ -33,7 +33,7 @@ AppAsset::register($this);
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
-    echo Nav::widget([
+/*    echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Rubric', 'url' => ['/rubric/index']],
@@ -41,7 +41,7 @@ AppAsset::register($this);
             ['label' => 'Contact', 'url' => ['/site/contact']],
 
         ],
-    ]);
+    ]);*/
     NavBar::end();
     ?>
 
