@@ -20,7 +20,7 @@ use yii\helpers\Url;
         <h2><a href="<?php echo Yii::$app->urlManager->createUrl(['style/view', 'id' => $model->id]) ?>"><?php echo Html::encode($model->title) ?></a></h2>
     </div>
 
-    <div style="float:left;"><?= HtmlPurifier::process(Html::img($model->image,['width' => '100px'])) ?></div>
+    <div style="float:left;"><?php if(isset($model->image)){echo HtmlPurifier::process(Html::img($model->image,['width' => '100px']));} ?></div>
 
     <div style="float:left;margin-left:10px;"><?= HtmlPurifier::process(Html::encode($model->description)) ?></div>
 
