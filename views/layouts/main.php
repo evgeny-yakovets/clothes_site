@@ -54,16 +54,17 @@ AppAsset::register($this);
         <div class="menu" style="width:17%;float:left;">
 
             <?php
+
             $verticalMenu = [
                 ['label' => 'Rubrics', 'url' => ['/rubric/index']],
                 ['label' => 'About', 'url' => ['/site/about']],
-                ['label' => 'Contact', 'url' => ['/site/contact']],
-                ['label' => 'Logout', 'url' => ['/site/logout']],
+                ['label' => 'Contact', 'url' => ['/site/contact']]
             ];
 
             if(!Yii::$app->user->isGuest)
             {
                 array_push($verticalMenu, ['label' => 'Styles', 'url' => ['/style/index']] );
+                array_push($verticalMenu,['label' => 'Logout ', 'url'=> ['/site/logout'], 'linkOptions' => ['data-method' => 'post']]);
             }
             echo Nav::widget([
                 'options' => ['class' => 'nav nav-pils nav-stacked'],
