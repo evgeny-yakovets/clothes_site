@@ -47,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             ],
             'options' => [
-                'style' => 'height:500px;text-align:center;'
+                'style' => 'height:500px;'
             ]
         ]);
     }
