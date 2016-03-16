@@ -27,8 +27,8 @@ if(!Yii::$app->user->isGuest)
         <?php
         if(!Yii::$app->user->isGuest)
         {
-        Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']);
-        Html::a('Delete', ['delete', 'id' => $model->id], [
+        echo Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']);
+        echo Html::a('Delete', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
@@ -41,13 +41,13 @@ if(!Yii::$app->user->isGuest)
     <?php
     if(!Yii::$app->user->isGuest)
     {
-        DetailView::widget([
+    echo DetailView::widget([
             'model' => $model,
             'attributes' => [
                 'id',
                 'title',
-                'image',
                 'description',
+                'image:image',
             ],
         ]);
     }
