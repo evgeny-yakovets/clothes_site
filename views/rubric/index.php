@@ -10,7 +10,7 @@ use app\models\Rubric;
 use yii\widgets\ListView;
 use yii\data\ActiveDataProvider;
 
-$this->title = 'Rubrics';
+$this->title = 'Разделы';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="rubric-index">
