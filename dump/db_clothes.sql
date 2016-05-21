@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 05, 2016 at 04:14 PM
+-- Generation Time: Mar 16, 2016 at 04:03 PM
 -- Server version: 5.5.44-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.14
 
@@ -46,15 +46,16 @@ CREATE TABLE IF NOT EXISTS `db_rubric` (
   `image` varchar(255) NOT NULL,
   `description` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `db_rubric`
 --
 
 INSERT INTO `db_rubric` (`id`, `title`, `image`, `description`) VALUES
-(1, 'Rubric1', 'image', 'description'),
-(2, 'Rubric2', 'imgae2', 'Description2');
+(1, 'Rubric1', '/images/rubric/Sonik.jpg', 'description'),
+(2, 'Rubric2', '', 'Description2'),
+(3, 'Rubric3', '/images/rubric/Sonik.jpg', 'Rubric3');
 
 -- --------------------------------------------------------
 
@@ -76,7 +77,8 @@ CREATE TABLE IF NOT EXISTS `db_rubrics_styles` (
 --
 
 INSERT INTO `db_rubrics_styles` (`id`, `rubric_id`, `style_id`) VALUES
-(1, 1, 1);
+(1, 1, 1),
+(2, 2, 2);
 
 -- --------------------------------------------------------
 
@@ -90,14 +92,16 @@ CREATE TABLE IF NOT EXISTS `db_style` (
   `image` varchar(255) NOT NULL,
   `description` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `db_style`
 --
 
 INSERT INTO `db_style` (`id`, `title`, `image`, `description`) VALUES
-(1, 'title', 'image', 'description');
+(1, 'title', '/images/style/Sonik.jpg', 'description'),
+(2, '123', '/images/style/Sonik.jpg', '123'),
+(3, 'Style3', '/images/style/Sonik.jpg', 'Style3');
 
 -- --------------------------------------------------------
 
@@ -123,8 +127,8 @@ CREATE TABLE IF NOT EXISTS `db_user` (
 -- Constraints for table `db_rubrics_styles`
 --
 ALTER TABLE `db_rubrics_styles`
-  ADD CONSTRAINT `db_rubrics_styles_ibfk_2` FOREIGN KEY (`style_id`) REFERENCES `db_style` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `db_rubrics_styles_ibfk_1` FOREIGN KEY (`rubric_id`) REFERENCES `db_rubric` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `db_rubrics_styles_ibfk_1` FOREIGN KEY (`rubric_id`) REFERENCES `db_rubric` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `db_rubrics_styles_ibfk_2` FOREIGN KEY (`style_id`) REFERENCES `db_style` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
