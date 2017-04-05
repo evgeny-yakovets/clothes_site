@@ -3,7 +3,11 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
+<<<<<<< Updated upstream
 -- Generation Time: Mar 16, 2016 at 04:03 PM
+=======
+-- Generation Time: Mar 28, 2016 at 12:52 PM
+>>>>>>> Stashed changes
 -- Server version: 5.5.44-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.14
 
@@ -53,9 +57,15 @@ CREATE TABLE IF NOT EXISTS `db_rubric` (
 --
 
 INSERT INTO `db_rubric` (`id`, `title`, `image`, `description`) VALUES
+<<<<<<< Updated upstream
 (1, 'Rubric1', '/images/rubric/Sonik.jpg', 'description'),
 (2, 'Rubric2', '', 'Description2'),
 (3, 'Rubric3', '/images/rubric/Sonik.jpg', 'Rubric3');
+=======
+(1, 'Джинсы', '/images/rubric/Sonik.jpg', 'Описание джинсов'),
+(2, 'Галстуки', '', 'Описание галстуков'),
+(3, 'Рубашки', '/images/rubric/Sonik.jpg', 'Описание рубашек');
+>>>>>>> Stashed changes
 
 -- --------------------------------------------------------
 
@@ -99,9 +109,15 @@ CREATE TABLE IF NOT EXISTS `db_style` (
 --
 
 INSERT INTO `db_style` (`id`, `title`, `image`, `description`) VALUES
+<<<<<<< Updated upstream
 (1, 'title', '/images/style/Sonik.jpg', 'description'),
 (2, '123', '/images/style/Sonik.jpg', '123'),
 (3, 'Style3', '/images/style/Sonik.jpg', 'Style3');
+=======
+(1, 'Джинсы Новые', '/images/style/Sonik.jpg', 'Новые джинсы, без дыр.'),
+(2, 'Галстук Новый', '/images/style/Sonik.jpg', 'Новый галстук, целый.'),
+(3, 'Рубашка Новая', '/images/style/Sonik.jpg', 'Новая рубашка, без дыр.');
+>>>>>>> Stashed changes
 
 -- --------------------------------------------------------
 

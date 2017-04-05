@@ -50,9 +50,9 @@ class Style extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'title' => 'Title',
-            'image' => 'Image',
-            'description' => 'Description',
+            'title' => 'Заголовок',
+            'image' => 'Изображение',
+            'description' => 'Описание',
         ];
     }
 

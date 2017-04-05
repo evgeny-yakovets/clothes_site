@@ -4,15 +4,18 @@
 
 use yii\helpers\Html;
 
-$this->title = 'About';
+$this->title = 'О нас';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-about">
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        This is the About page. You may modify the following file to customize its content:
+        Сайт дизайнера модной одежды, разработан в 2016 году на php фреймворке Yii 2.0 с использованием веб-сервера apache2 и MySQL базы данных.
+        <br>
+        <br>
+        Разработчик:
+        <br>
     </p>
 
-    <code><?= __FILE__ ?></code>
 </div>

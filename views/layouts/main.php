@@ -27,7 +27,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'My Company',
+        'brandLabel' => 'Модный сайт',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -56,16 +56,13 @@ AppAsset::register($this);
             <?php
 
             $verticalMenu = [
-                ['label' => 'Rubrics', 'url' => ['/rubric/index']],
-                ['label' => 'About', 'url' => ['/site/about']],
-                ['label' => 'Contact', 'url' => ['/site/contact']]
+                ['label' => 'Разделы', 'url' => ['/rubric/index']],
+                ['label' => 'Работы', 'url' => ['/style/index'], 'visible'=>!Yii::$app->user->isGuest],
+                ['label' => 'О нас', 'url' => ['/site/about']],
+                ['label' => 'Контакты', 'url' => ['/site/contact']],
+                ['label' => 'Выйти', 'url'=> ['/site/logout'], 'linkOptions' => ['data-method' => 'post'], 'visible'=>!Yii::$app->user->isGuest]
             ];
 
-            if(!Yii::$app->user->isGuest)
-            {
-                array_push($verticalMenu, ['label' => 'Styles', 'url' => ['/style/index']] );
-                array_push($verticalMenu,['label' => 'Logout ', 'url'=> ['/site/logout'], 'linkOptions' => ['data-method' => 'post']]);
-            }
             echo Nav::widget([
                 'options' => ['class' => 'nav nav-pils nav-stacked'],
                 'items' => $verticalMenu,
@@ -86,7 +83,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+        <p class="pull-left">&copy; Модный сайт <?= date('Y') ?></p>
 
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>

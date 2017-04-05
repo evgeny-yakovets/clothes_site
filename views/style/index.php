@@ -10,7 +10,7 @@ use app\models\Style;
 use yii\widgets\ListView;
 use yii\data\ActiveDataProvider;
 
-$this->title = 'Styles';
+$this->title = 'Одежда';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="style-index">
@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php
         if(!Yii::$app->user->isGuest)
         {
-            echo Html::a('Create Style', ['create'], ['class' => 'btn btn-success']);
+            echo Html::a('Добавить', ['create'], ['class' => 'btn btn-success']);
         }
 
         ?>

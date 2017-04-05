@@ -10,7 +10,7 @@ use app\models\Rubric;
 use yii\widgets\ListView;
 use yii\data\ActiveDataProvider;
 
-$this->title = 'Rubrics';
+$this->title = 'Разделы';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="rubric-index">
@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php
         if(!Yii::$app->user->isGuest)
         {
-           echo Html::a('Create Rubric', ['create'], ['class' => 'btn btn-success']);
+           echo Html::a('Добавить', ['create'], ['class' => 'btn btn-success']);
         }
 
          ?>
