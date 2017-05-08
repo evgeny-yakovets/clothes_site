@@ -1,0 +1,55 @@
+<?php
+
+use yii\helpers\Html;
+use yii\widgets\DetailView;
+
+/* @var $this yii\web\View */
+/* @var $model app\models\News */
+
+$this->title = $model->title;
+$this->params['breadcrumbs'][] = ['label' => 'Новости', 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;
+?>
+<div class="news-view">
+
+    <h1><?= Html::encode($this->title) ?></h1>
+
+    <p>
+    <?php
+        $visibility = false;
+
+        if (Yii::$app->user->isGuest)
+        {
+            $visibility = !Yii::$app->user->isGuest;
+        }
+        else
+        {
+            $visibility = Yii::$app->user->identity['type'] == 'admin' ? true : false;
+        }
+
+        if($visibility)
+        {
+            echo Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']);
+            echo Html::a('Delete', ['delete', 'id' => $model->id], [
+                'class' => 'btn btn-danger',
+                'data' => [
+                    'confirm' => 'Are you sure you want to delete this item?',
+                    'method' => 'post',
+                ],
+            ]);
+        }
+    ?>
+    </p>
+
+    <?= DetailView::widget([
+        'model' => $model,
+        'attributes' => [
+            'title',
+            'date',
+            'text',
+
+        ],
+        'template' => "<p>{value}</p>",
+    ]) ?>
+
+</div>

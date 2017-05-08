@@ -27,23 +27,36 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'Модный сайт',
+        'brandLabel' => '«eBook online»',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
-    ]);
-/*    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => [
-            ['label' => 'Rubric', 'url' => ['/rubric/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
 
-        ],
-    ]);*/
+    ]);
+    $menuItems = [];
+    if (Yii::$app->user->isGuest)
+    {
+        $menuItems = [
+            ['label' => 'Регистрация', 'url' => ['/site/login']],
+            ['label' => 'Авторизация', 'url' => ['/site/login']],
+        ];
+    }
+    else
+    {
+        $menuItems = [
+            ['label' => Yii::$app->user->identity['first_name'], 'url' => ['/site/login']],
+            ['label' => 'Выход', 'url' => ['/logout-user']],
+        ];
+    }
+    echo Nav::widget([
+        'options' => ['class' => 'navbar-nav navbar-right'],
+        'items' => $menuItems,
+    ]);
     NavBar::end();
+
     ?>
+
 
 
     <div class="container">
@@ -54,13 +67,36 @@ AppAsset::register($this);
         <div class="menu" style="width:17%;float:left;">
 
             <?php
+            $visibility = false;
+            if (Yii::$app->user->isGuest)
+            {
+                $visibility = !Yii::$app->user->isGuest;
+            }
+            else
+            {
+                $visibility = Yii::$app->user->identity['type'] == 'admin' ? true : false;
+            }
 
             $verticalMenu = [
-                ['label' => 'Разделы', 'url' => ['/rubric/index']],
-                ['label' => 'Работы', 'url' => ['/style/index'], 'visible'=>!Yii::$app->user->isGuest],
+                ['label' => 'Авторы', 'url' => ['/author/index'], 'visible'=> $visibility],
+                //['label' => 'Авторы и книги', 'url' => ['/authors-books/index'], 'visible'=>$visibility],
+                ['label' => 'Книги', 'url' => ['/book/index']],
+                ['label' => 'Комментарии', 'url' => ['/comment/index'], 'visible'=>$visibility],
+                //['label' => 'Комментарии и книги', 'url' => ['/comments-books/index'], 'visible'=>$visibility],
+                //['label' => 'Комментарии и сборники', 'url' => ['/comments-series/index'], 'visible'=>$visibility],
+                ['label' => 'Избранные', 'url' => ['/favorites/index'], 'visible'=>$visibility],
+                ['label' => 'Файлы', 'url' => ['/files/index'], 'visible'=>$visibility],
+                ['label' => 'Рецензии', 'url' => ['/review/index'], 'visible'=>$visibility],
+                //['label' => 'Рецензии и книги', 'url' => ['/reviews-books/index'], 'visible'=>$visibility],
+                ['label' => 'Рубрики', 'url' => ['/rubric/index'], 'visible'=>$visibility],
+                //['label' => 'Рубрики и книги', 'url' => ['/rubrics-books/index'], 'visible'=>$visibility],
+                ['label' => 'Сборники', 'url' => ['/series/index']],
+                //['label' => 'Сборники и книги и авторы', 'url' => ['/series-books-authors/index'], 'visible'=>$visibility],
+                ['label' => 'Новости', 'url' => ['/news/index']],
+                ['label' => 'Работы', 'url' => ['/style/index'], 'visible'=>$visibility],
                 ['label' => 'О нас', 'url' => ['/site/about']],
                 ['label' => 'Контакты', 'url' => ['/site/contact']],
-                ['label' => 'Выйти', 'url'=> ['/site/logout'], 'linkOptions' => ['data-method' => 'post'], 'visible'=>!Yii::$app->user->isGuest]
+                ['label' => 'Выйти', 'url'=> ['/site/logout'], 'linkOptions' => ['data-method' => 'post'], 'visible'=>$visibility]
             ];
 
             echo Nav::widget([
@@ -83,7 +119,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; Модный сайт <?= date('Y') ?></p>
+        <p class="pull-left">&copy; «eBook online» <?= date('Y') ?></p>
 
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>

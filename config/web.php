@@ -46,6 +46,7 @@ $config = [
             'rules' => [
                 '' => 'site/index',
                 '<action>'=>'site/<action>',
+                'book/<aciton:\w+>/<id:\d+>' => 'book/download',
                 '<module:\w+>/<controller:\w+>/<aciton:\w+>' => '<module>/<controller>/<action>',
             ],
         ],

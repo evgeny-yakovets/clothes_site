@@ -9,6 +9,8 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 
+use app\models\News;
+
 class SiteController extends Controller
 {
     public function behaviors()
@@ -49,12 +51,14 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        return $this->render('index');
+        return $this->render('index', [
+            'news' => $this->getNews()
+        ]);
     }
 
     public function actionLogin()
     {
-        if (!\Yii::$app->user->isGuest) {
+        if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
@@ -67,7 +71,7 @@ class SiteController extends Controller
         ]);
     }
 
-    public function actionLogout()
+    public function actionLogoutUser()
     {
         Yii::$app->user->logout();
 
@@ -90,5 +94,9 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
+    }
+
+    private function getNews(){
+        return News::find()->limit(5)->all();
     }
 }

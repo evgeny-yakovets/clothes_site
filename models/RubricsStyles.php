@@ -12,7 +12,7 @@ use Yii;
  * @property integer $style_id
  *
  * @property Style $style
- * @property Rubric $rubric
+ * @property Rubric $rubric(cloth)
  */
 class RubricsStyles extends \yii\db\ActiveRecord
 {

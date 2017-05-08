@@ -9,7 +9,7 @@ use yii\bootstrap\Carousel;
 /* @var $model app\models\Style */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Styles', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Одежда', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="style-view">

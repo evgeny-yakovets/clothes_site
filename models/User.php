@@ -2,37 +2,76 @@
 
 namespace app\models;
 
-class User extends \yii\base\Object implements \yii\web\IdentityInterface
+use Yii;
+
+/**
+ * This is the model class for table "db_user".
+ *
+ * @property integer $id
+ * @property string $first_name
+ * @property string $last_name
+ * @property string $email
+ * @property string $password
+ * @property string $type
+ * @property string $auth_key
+ * @property string $access_token
+ */
+//class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
+class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
-    public $id;
+    public $uid;
     public $username;
-    public $password;
+    public $pass;
     public $authKey;
     public $accessToken;
 
-    private static $users = [
-        '100' => [
-            'id' => '100',
-            'username' => 'admin',
-            'password' => 'admin',
-            'authKey' => 'test100key',
-            'accessToken' => '100-token',
-        ],
-        '101' => [
-            'id' => '101',
-            'username' => 'demo',
-            'password' => 'demo',
-            'authKey' => 'test101key',
-            'accessToken' => '101-token',
-        ],
-    ];
+    /**
+     * @inheritdoc
+     */
+    public static function tableName()
+    {
+        return 'db_user';
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['first_name', 'last_name', 'email', 'password', 'type', 'auth_key', 'access_token'], 'required'],
+            [['first_name', 'last_name'], 'string', 'max' => 40],
+            [['email'], 'string', 'max' => 70],
+            [['password'], 'string', 'max' => 36],
+            [['type'], 'string', 'max' => 5],
+            [['auth_key', 'access_token'], 'string', 'max' => 50]
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'first_name' => 'First Name',
+            'last_name' => 'Last Name',
+            'email' => 'Email',
+            'password' => 'Password',
+            'type' => 'Type',
+            'auth_key' => 'Auth Key',
+            'access_token' => 'Access Token',
+        ];
+    }
 
     /**
      * @inheritdoc
      */
     public static function findIdentity($id)
     {
-        return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
+        if ($user = self::findOne(['id' => $id]))
+            return isset($user) ? new static($user) : null;
     }
 
     /**
@@ -40,11 +79,8 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        foreach (self::$users as $user) {
-            if ($user['accessToken'] === $token) {
+        if ($user = self::findOne(['access_token' => $token]))
                 return new static($user);
-            }
-        }
 
         return null;
     }
@@ -57,10 +93,9 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
      */
     public static function findByUsername($username)
     {
-        foreach (self::$users as $user) {
-            if (strcasecmp($user['username'], $username) === 0) {
-                return new static($user);
-            }
+        if ($user = self::getFullUserInfo(self::findOne(['email' => $username])))
+        {
+            return new static($user);
         }
 
         return null;
@@ -71,7 +106,7 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
      */
     public function getId()
     {
-        return $this->id;
+        return $this->uid;
     }
 
     /**
@@ -98,6 +133,17 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
      */
     public function validatePassword($password)
     {
-        return $this->password === $password;
+        return $this->pass === $password;
+    }
+
+    private function getFullUserInfo($sqlUser)
+    {
+        $user['uid'] = $sqlUser['id'];
+        $user['username'] = $sqlUser['email'];
+        $user['pass'] = $sqlUser['password'];
+        $user['authKey'] = $sqlUser['auth_key'];
+        $user['accessToken'] = $sqlUser['access_token'];
+
+        return $user;
     }
 }
