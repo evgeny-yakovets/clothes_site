@@ -26,7 +26,7 @@ $this->title = '«eBook online»';
                 foreach ($news as $newsEl) {
                     $content[] = [
                         'content' => '<img src="images/site/carusel/background.jpg" style="height:100%;margin:auto;"/>',
-                        'caption' => "<p style='text-decoration-color: #080808'><h4>$newsEl->title</h4><p>$newsEl->preview</p></p>",
+                        'caption' => "<p><h4>$newsEl->title</h4><p>$newsEl->preview</p></p>",
                         'options' => [],
                     ];
                 }
