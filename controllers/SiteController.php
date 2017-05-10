@@ -10,6 +10,7 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 
 use app\models\News;
+use app\models\Book;
 
 class SiteController extends Controller
 {
@@ -52,7 +53,8 @@ class SiteController extends Controller
     public function actionIndex()
     {
         return $this->render('index', [
-            'news' => $this->getNews()
+            'news' => $this->getNews(),
+            'books' => $this->getBooks()
         ]);
     }
 
@@ -97,6 +99,10 @@ class SiteController extends Controller
     }
 
     private function getNews(){
-        return News::find()->limit(5)->all();
+        return News::find()->orderBy(['id'=>SORT_DESC])->limit(5)->all();
+    }
+
+    private function getBooks(){
+        return Book::find()->orderBy(['id'=>SORT_DESC])->limit(5)->all();
     }
 }
