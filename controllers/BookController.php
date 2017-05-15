@@ -2,7 +2,9 @@
 
 namespace app\controllers;
 
+use app\models\CommentsSeries;
 use app\models\Files;
+use Faker\Provider\DateTime;
 use Yii;
 use app\models\Book;
 use app\models\Comment;
@@ -55,6 +57,21 @@ class BookController extends Controller
      */
     public function actionView($id)
     {
+        $cModel = new Comment();
+        if ($cModel->load(Yii::$app->request->post()))
+        {
+            var_dump($cModel['text']);
+            $cModel->author = Yii::$app->user->identity['first_name'];
+            $cModel->date = new \yii\db\Expression('NOW()');
+            $cModel->save();
+
+            $cbModel = new CommentsBooks();
+            $cbModel->book_id = $id;
+            $cbModel->commnet_id = $cModel->id;
+            $cbModel->save();
+
+        }
+
         return $this->render('view', [
             'model' => $this->findModel($id),
             'files' => $this->findFiles($id),

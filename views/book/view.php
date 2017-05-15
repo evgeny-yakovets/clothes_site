@@ -1,13 +1,16 @@
 <?php
 
 use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 use yii\widgets\DetailView;
+use app\models\Comment;
 
+/* @var $form yii\widgets\ActiveForm */
 /* @var $this yii\web\View */
 /* @var $model app\models\Book */
 /* @var $files app\models\Files */
-/* @var $reviews app\models\Reviews */
-/* @var $comments app\models\Comments */
+/* @var $reviews app\models\Review */
+/* @var $comments app\models\Comment */
 /* @var $is_favorite bool*/
 
 $this->title = $model->title;
@@ -114,9 +117,28 @@ $this->params['breadcrumbs'][] = $this->title;
         }
     ?>
 
+    <div class="comment-form">
+
+        <?php
+
+            echo "<br><br><br>";
+
+            $form = ActiveForm::begin();
+            $newComment = new Comment();
+        ?>
+
+        <?= $form->field($newComment, 'text')->textarea(['rows' => 4, 'cols' => 100]) ?>
+
+        <div class="form-group">
+            <?= Html::submitButton('Добавить', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        </div>
+
+        <?php ActiveForm::end(); ?>
+
+    </div>
+
     <?php
     if($comments != null) {
-        echo "<br><br><br>";
         echo Html::Label("Comments: ");
 
         foreach ($comments as $comment) {

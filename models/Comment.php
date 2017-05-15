@@ -47,7 +47,7 @@ class Comment extends \yii\db\ActiveRecord
             'id' => 'ID',
             'author' => 'Author',
             'date' => 'Date',
-            'text' => 'Text',
+            'text' => 'Комментарий',
         ];
     }
 

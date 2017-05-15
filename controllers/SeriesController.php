@@ -51,6 +51,21 @@ class SeriesController extends Controller
      */
     public function actionView($id)
     {
+        $cModel = new Comment();
+        if ($cModel->load(Yii::$app->request->post()))
+        {
+            var_dump($cModel['text']);
+            $cModel->author = Yii::$app->user->identity['first_name'];
+            $cModel->date = new \yii\db\Expression('NOW()');
+            $cModel->save();
+
+            $cbModel = new CommentsSeries();
+            $cbModel->series_id = $id;
+            $cbModel->comment_id = $cModel->id;
+            $cbModel->save();
+
+        }
+
         return $this->render('view', [
             'model' => $this->findModel($id),
             'files' => $this->findFiles($id),
