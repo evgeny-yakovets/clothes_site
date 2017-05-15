@@ -60,7 +60,6 @@ class BookController extends Controller
         $cModel = new Comment();
         if ($cModel->load(Yii::$app->request->post()))
         {
-            var_dump($cModel['text']);
             $cModel->author = Yii::$app->user->identity['first_name'];
             $cModel->date = new \yii\db\Expression('NOW()');
             $cModel->save();
