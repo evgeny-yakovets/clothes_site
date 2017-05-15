@@ -146,4 +146,29 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 
         return $user;
     }
+
+    /**
+     * Logs in a user using the provided username and password.
+     * @return boolean whether the user is logged in successfully
+     */
+    public function login($login, $password)
+    {
+
+        if ($this->validate()) {
+            return Yii::$app->user->login($this->getUser($login, $password));
+        }
+        return false;
+    }
+
+    /**
+     * Finds user by [[username]]
+     *
+     * @return User|null
+     */
+    public function getUser($login, $password)
+    {
+        $user = User::findByUsername($login);
+
+        return $user;
+    }
 }

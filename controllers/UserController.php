@@ -137,4 +137,35 @@ class UserController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+    /**
+     * Creates a new User model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionRegistration()
+    {
+        $model = new User();
+
+        $model->load(Yii::$app->request->post());
+        $model->type = 'user';
+        $model->auth_key = 'test'. $model->getId() . 'key';
+        $model->access_token = $model->getId() . '-token';
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $model->auth_key = 'test'. $model->id . 'key';
+            $model->access_token = $model->id . '-token';
+            $model->update(['id' => $model->id]);
+
+            $model->login($model->email, $model->password);
+            //var_dump(Yii::$app->user->login($model));
+            //die();
+
+            return $this->redirect(['personal', 'id' => $model->id]);
+        } else {
+            return $this->render('registration', [
+                'model' => $model,
+            ]);
+        }
+    }
 }

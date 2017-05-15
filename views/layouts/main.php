@@ -38,7 +38,7 @@ AppAsset::register($this);
     if (Yii::$app->user->isGuest)
     {
         $menuItems = [
-            ['label' => 'Регистрация', 'url' => ['/site/login']],
+            ['label' => 'Регистрация', 'url' => ['/user/registration']],
             ['label' => 'Авторизация', 'url' => ['/site/login']],
         ];
     }
