@@ -34,6 +34,9 @@ class RubricController extends Controller
     {
         $dataProvider = new ActiveDataProvider([
             'query' => Rubric::find(),
+            'sort' => [
+                'attributes'=>['title']
+            ]
         ]);
 
         return $this->render('index', [

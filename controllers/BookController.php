@@ -12,6 +12,7 @@ use app\models\CommentsBooks;
 use app\models\Review;
 use app\models\ReviewsBooks;
 use app\models\Favorites;
+use app\models\RubricsBooks;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -36,12 +37,25 @@ class BookController extends Controller
 
     /**
      * Lists all Book models.
+     * @param $rubric_id
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($rubric_id = null)
     {
         $request = Yii::$app->request->post();
         $condition = '';
+
+        if(isset($rubric_id))
+        {
+            $rubricsBooks = RubricsBooks::findAll(['rubric_id' => $rubric_id]);
+            $books = [];
+            foreach ($rubricsBooks as $rb)
+            {
+                $books[] = $rb['book_id'];
+            }
+
+            $condition['id'] = $books;
+        }
 
         if(isset($request['Book']) && $request['Book']['title'] != null)
         {
@@ -54,7 +68,10 @@ class BookController extends Controller
         }
 
         $dataProvider = new ActiveDataProvider([
-            'query' => Book::find(),
+            'query' => Book::find()->where($condition),
+            'sort' => [
+                'attributes'=>['title','year']
+            ],
             'pagination' => [
                 'pageSize' => 20,
             ],
@@ -97,6 +114,9 @@ class BookController extends Controller
 
         $dataProvider = new ActiveDataProvider([
             'query' => Book::find()->where($condition),
+            'sort' => [
+                'attributes'=>['title','year']
+            ],
             'pagination' => [
                 'pageSize' => 20,
             ],

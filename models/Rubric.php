@@ -38,7 +38,7 @@ class Rubric extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'title' => 'Title',
+            'title' => 'Название',
         ];
     }
 }

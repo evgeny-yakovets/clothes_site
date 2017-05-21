@@ -89,7 +89,7 @@ AppAsset::register($this);
                 ['label' => 'Файлы', 'url' => ['/files/index'], 'visible'=>$visibility],
                 ['label' => 'Рецензии', 'url' => ['/review/index'], 'visible'=>$visibility],
                 //['label' => 'Рецензии и книги', 'url' => ['/reviews-books/index'], 'visible'=>$visibility],
-                ['label' => 'Рубрики', 'url' => ['/rubric/index'], 'visible'=>$visibility],
+                ['label' => 'Жанры', 'url' => ['/rubric/index'], 'visible'=> !Yii::$app->user->isGuest],
                 //['label' => 'Рубрики и книги', 'url' => ['/rubrics-books/index'], 'visible'=>$visibility],
                 ['label' => 'Сборники', 'url' => ['/series/index']],
                 //['label' => 'Сборники и книги и авторы', 'url' => ['/series-books-authors/index'], 'visible'=>$visibility],

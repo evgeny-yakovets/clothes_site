@@ -10,28 +10,10 @@ use yii\grid\GridView;
 
 use app\models\Book;
 use yii\widgets\ListView;
-use yii\data\ActiveDataProvider;
 use yii\widgets\ActiveForm;
 
 $this->title = 'Книги';
 $this->params['breadcrumbs'][] = $this->title;
-
-if(isset($books))
-{
-    $dataProvider = $books;
-}
-else
-{
-    $dataProvider = new ActiveDataProvider([
-        'query' => Book::find()->where($condition),
-        'pagination' => [
-            'pageSize' => 20,
-        ],
-        'sort' => [
-            'attributes'=>['title','year']
-        ]
-    ]);
-}
 
 ?>
 <div class="book-index">
