@@ -32,12 +32,21 @@ class NewsController extends Controller
      */
     public function actionIndex()
     {
+        $request = Yii::$app->request->post();
+        $condition = '';
+
+        if(isset($request['News']) && $request['News']['title'] != null)
+        {
+            $condition['title' ] = $request['News']['title'];
+        }
+
         $dataProvider = new ActiveDataProvider([
             'query' => News::find(),
         ]);
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'condition' => $condition,
         ]);
     }
 

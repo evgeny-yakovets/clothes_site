@@ -16,7 +16,7 @@ use yii\helpers\Url;
 <div class="news-item" style="overflow:hidden;">
 
     <div>
-        <h2><a href="<?php echo Yii::$app->urlManager->createUrl(['news/view', 'id' => $model->id]) ?>"><?php echo Html::encode($model->title) ?></a></h2>
+        <h2><a style="text-decoration: none;color:black;" href="<?php echo Yii::$app->urlManager->createUrl(['news/view', 'id' => $model->id]) ?>"><?php echo Html::encode($model->title) ?></a></h2>
     </div>
 
     <div style="float:left;"><?php if($model->title != null){echo HtmlPurifier::process(Html::img($model->title,['width' => '100px']));} ?></div>

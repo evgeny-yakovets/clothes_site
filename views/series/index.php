@@ -5,10 +5,12 @@ use yii\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $condition */
 
 use app\models\Series;
 use yii\widgets\ListView;
 use yii\data\ActiveDataProvider;
+use yii\widgets\ActiveForm;
 
 $this->title = 'Сборники';
 $this->params['breadcrumbs'][] = $this->title;
@@ -16,6 +18,24 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="series-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
+
+    <div class="search-series-form" style="display: inline-block;">
+        <?php
+
+            $form = ActiveForm::begin();
+            $form->enableClientValidation = false;
+            $searchBSeries = new Series();
+        ?>
+        <div style="float:left;">
+            <?= $form->field($searchBSeries, 'title')->textInput(['style' => 'width:200px;'])->label('Название') ?>
+        </div>
+
+        <div class="form-group" style="float:left;margin-left:10px;margin-top:24px;">
+            <?= Html::submitButton('Поиск', ['class' => 'btn btn-success']) ?>
+        </div>
+
+        <?php ActiveForm::end(); ?>
+    </div>
 
     <?php
     $visibility = false;
@@ -55,7 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
     else
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Series::find(),
+            'query' => Series::find()->where($condition),
             'pagination' => [
                 'pageSize' => 20,
             ],

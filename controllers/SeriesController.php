@@ -35,12 +35,21 @@ class SeriesController extends Controller
      */
     public function actionIndex()
     {
+        $request = Yii::$app->request->post();
+        $condition = '';
+
+        if(isset($request['Series']) && $request['Series']['title'] != null)
+        {
+            $condition['title' ] = $request['Series']['title'];
+        }
+
         $dataProvider = new ActiveDataProvider([
             'query' => Series::find(),
         ]);
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'condition' => $condition,
         ]);
     }
 

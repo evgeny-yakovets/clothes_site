@@ -40,13 +40,29 @@ class BookController extends Controller
      */
     public function actionIndex()
     {
+        $request = Yii::$app->request->post();
+        $condition = '';
+
+        if(isset($request['Book']) && $request['Book']['title'] != null)
+        {
+            $condition['title' ] = $request['Book']['title'];
+        }
+
+        if(isset($request['Book']) && $request['Book']['year'] != null)
+        {
+            $condition['year'] = $request['Book']['year'];
+        }
 
         $dataProvider = new ActiveDataProvider([
             'query' => Book::find(),
+            'pagination' => [
+                'pageSize' => 20,
+            ],
         ]);
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'condition' => $condition,
         ]);
     }
 
