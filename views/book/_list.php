@@ -21,6 +21,7 @@ use yii\helpers\Url;
 
     <div style="float:left;"><?php if($model->title != null){echo HtmlPurifier::process(Html::img($model->title,['width' => '100px']));} ?></div>
 
+    <div style="margin-left:10px;"><p>Год: <?= HtmlPurifier::process(Html::encode($model->year)) ?></p></div>
     <div style="float:left;margin-left:10px;"><?= HtmlPurifier::process(Html::encode($model->description)) ?></div>
 
 </div>
