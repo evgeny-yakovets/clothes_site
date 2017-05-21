@@ -44,11 +44,11 @@ class Series extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'title' => 'Title',
-            'start_year' => 'Start Year',
-            'end_year' => 'End Year',
-            'book_count' => 'Book Count',
-            'description' => 'Description',
+            'title' => 'Название',
+            'start_year' => 'Первая книга',
+            'end_year' => 'Последняя книга',
+            'book_count' => 'Количество книг',
+            'description' => 'Описание',
         ];
     }
 }

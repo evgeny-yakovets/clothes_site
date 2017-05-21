@@ -67,6 +67,48 @@ class BookController extends Controller
     }
 
     /**
+     * Lists all Book models.
+     * @return mixed
+     */
+    public function actionFavorite()
+    {
+        $request = Yii::$app->request->post();
+        $condition = '';
+
+        if(isset($request['Book']) && $request['Book']['title'] != null)
+        {
+            $condition['title' ] = $request['Book']['title'];
+        }
+
+        if(isset($request['Book']) && $request['Book']['year'] != null)
+        {
+            $condition['year'] = $request['Book']['year'];
+        }
+
+        $favorites = Favorites::findAll(['user_id' => Yii::$app->user->identity['id']]);
+        $books = [];
+        foreach ($favorites as $f)
+        {
+            $books[] = $f['book_id'];
+        }
+
+        $condition['id'] = $books;
+
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => Book::find()->where($condition),
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+        ]);
+
+        return $this->render('index', [
+            'dataProvider' => $dataProvider,
+            'condition' => $condition,
+        ]);
+    }
+
+    /**
      * Displays a single Book model.
      * @param integer $id
      * @return mixed

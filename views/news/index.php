@@ -14,27 +14,57 @@ use yii\widgets\ActiveForm;
 
 $this->title = 'Новости';
 $this->params['breadcrumbs'][] = $this->title;
+
+$dataProvider = new ActiveDataProvider([
+    'query' => News::find()->where($condition),
+    'pagination' => [
+        'pageSize' => 20,
+    ],
+    'sort' => [
+        'attributes'=>['title']
+    ]
+]);
 ?>
 <div class="news-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <div class="search-series-form" style="display: inline-block;">
-        <?php
+    <div style="display: inline-block;width: 100%;">
 
+        <div class="search-book-form" >
+            <?php
             $form = ActiveForm::begin();
             $form->enableClientValidation = false;
             $searchNews = new News();
-        ?>
-        <div style="float:left;">
-            <?= $form->field($searchNews, 'title')->textInput(['style' => 'width:200px;'])->label('Название') ?>
+            ?>
+            <div style="float:left;">
+                <?= $form->field($searchNews, 'title')->textInput(['style' => 'width:200px;'])->label('Название') ?>
+            </div>
+
+            <div class="form-group" style="float:left;margin-left:10px;margin-top:24px;">
+                <?= Html::submitButton('Поиск', ['class' => 'btn btn-success']) ?>
+            </div>
+
+            <?php ActiveForm::end(); ?>
+
+        </div>
+        <div style="float:left;margin-left:10px;margin-top:0px;">
+            <div>
+                <b>Сортировать: </b>
+            </div>
+            <div style="float:left;margin-left:-40px;margin-top:0px;">
+
+                <?php
+
+                echo ListView::widget([
+                    'dataProvider' => $dataProvider,
+                    'layout' => '{sorter}',
+                ]);
+
+                ?>
+            </div>
         </div>
 
-        <div class="form-group" style="float:left;margin-left:10px;margin-top:24px;">
-            <?= Html::submitButton('Поиск', ['class' => 'btn btn-success']) ?>
-        </div>
-
-        <?php ActiveForm::end(); ?>
     </div>
 
     <?php
@@ -72,13 +102,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     else
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => News::find()->where($condition),
-            'pagination' => [
-                'pageSize' => 20,
-            ],
-        ]);
-
         echo ListView::widget([
             'dataProvider' => $dataProvider,
             'itemView' => '_list',

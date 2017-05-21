@@ -80,6 +80,7 @@ AppAsset::register($this);
             $verticalMenu = [
                 ['label' => 'Авторы', 'url' => ['/author/index'], 'visible'=> $visibility],
                 //['label' => 'Авторы и книги', 'url' => ['/authors-books/index'], 'visible'=>$visibility],
+                ['label' => 'Любимые книги', 'url' => ['/book/favorite'], 'visible'=> !Yii::$app->user->isGuest],
                 ['label' => 'Книги', 'url' => ['/book/index']],
                 ['label' => 'Комментарии', 'url' => ['/comment/index'], 'visible'=>$visibility],
                 //['label' => 'Комментарии и книги', 'url' => ['/comments-books/index'], 'visible'=>$visibility],

@@ -5,6 +5,7 @@ use yii\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $books  */
 /* @var $condition  */
 
 use app\models\Book;
@@ -14,30 +15,69 @@ use yii\widgets\ActiveForm;
 
 $this->title = 'Книги';
 $this->params['breadcrumbs'][] = $this->title;
+
+if(isset($books))
+{
+    $dataProvider = $books;
+}
+else
+{
+    $dataProvider = new ActiveDataProvider([
+        'query' => Book::find()->where($condition),
+        'pagination' => [
+            'pageSize' => 20,
+        ],
+        'sort' => [
+            'attributes'=>['title','year']
+        ]
+    ]);
+}
+
 ?>
 <div class="book-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
+    <div style="display: inline-block;width: 100%;">
 
-    <div class="search-book-form" style="display: inline-block;">
-        <?php
-            $form = ActiveForm::begin();
-            $form->enableClientValidation = false;
-            $searchBook = new Book();
-        ?>
-        <div style="float:left;">
-            <?= $form->field($searchBook, 'title')->textInput(['style' => 'width:200px;'])->label('Название') ?>
+        <div class="search-book-form" >
+            <?php
+                $form = ActiveForm::begin();
+                $form->enableClientValidation = false;
+                $searchBook = new Book();
+            ?>
+            <div style="float:left;">
+                <?= $form->field($searchBook, 'title')->textInput(['style' => 'width:200px;'])->label('Название') ?>
+            </div>
+            <div style="float:left;margin-left:10px;">
+                <?= $form->field($searchBook, 'year')->textInput(['style' => 'width:200px;'])->label('Год') ?>
+            </div>
+
+            <div class="form-group" style="float:left;margin-left:10px;margin-top:24px;">
+                <?= Html::submitButton('Поиск', ['class' => 'btn btn-success']) ?>
+            </div>
+
+            <?php ActiveForm::end(); ?>
+
         </div>
-        <div style="float:left;margin-left:10px;">
-            <?= $form->field($searchBook, 'year')->textInput(['style' => 'width:200px;'])->label('Год') ?>
+        <div style="float:left;margin-left:10px;margin-top:0px;">
+            <div>
+                <b>Сортировать: </b>
+            </div>
+            <div style="float:left;margin-left:-40px;margin-top:0px;">
+
+                <?php
+
+                echo ListView::widget([
+                    'dataProvider' => $dataProvider,
+                    'layout' => '{sorter}',
+                ]);
+
+                ?>
+            </div>
         </div>
 
-        <div class="form-group" style="float:left;margin-left:10px;margin-top:24px;">
-            <?= Html::submitButton('Поиск', ['class' => 'btn btn-success']) ?>
-        </div>
-
-        <?php ActiveForm::end(); ?>
     </div>
+
 
     <?php
 
@@ -74,17 +114,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
     else
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Book::find()->where($condition),
-            'pagination' => [
-                'pageSize' => 20,
-            ],
-        ]);
 
-        echo ListView::widget([
-            'dataProvider' => $dataProvider,
-            'itemView' => '_list',
-        ]);
+
+    echo ListView::widget([
+        'dataProvider' => $dataProvider,
+        'itemOptions' => ['class' => 'item'],
+        'itemView' => '_list'
+    ]);
     }
 
 

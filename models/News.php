@@ -43,10 +43,10 @@ class News extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'title' => 'Title',
-            'preview' => 'Preview',
-            'text' => 'Text',
-            'date' => 'Date',
+            'title' => 'Название',
+            'preview' => 'Превью',
+            'text' => 'Текст',
+            'date' => 'Дата',
         ];
     }
 }
