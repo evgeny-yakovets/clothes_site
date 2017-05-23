@@ -34,6 +34,12 @@ class AuthorController extends Controller
     {
         $dataProvider = new ActiveDataProvider([
             'query' => Author::find(),
+            'sort' => [
+                'attributes'=>['name']
+            ],
+            'pagination' => [
+                'pageSize' => 20,
+            ],
         ]);
 
         return $this->render('index', [

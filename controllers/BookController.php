@@ -13,6 +13,8 @@ use app\models\Review;
 use app\models\ReviewsBooks;
 use app\models\Favorites;
 use app\models\RubricsBooks;
+use app\models\Author;
+use app\models\AuthorsBooks;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -40,7 +42,7 @@ class BookController extends Controller
      * @param $rubric_id
      * @return mixed
      */
-    public function actionIndex($rubric_id = null)
+    public function actionIndex($rubric_id = null,$author_id = null)
     {
         $request = Yii::$app->request->post();
         $condition = '';
@@ -55,6 +57,18 @@ class BookController extends Controller
             }
 
             $condition['id'] = $books;
+        }
+
+        if(isset($author_id))
+        {
+            $authorsBooks = AuthorsBooks::findAll(['author_id' => $author_id]);
+            $authors = [];
+            foreach ($authorsBooks as $ab)
+            {
+                $authors[] = $ab['book_id'];
+            }
+
+            $condition['id'] = $authors;
         }
 
         if(isset($request['Book']) && $request['Book']['title'] != null)
@@ -154,7 +168,8 @@ class BookController extends Controller
             'files' => $this->findFiles($id),
             'reviews' => $this->findReviews($id),
             'comments' => $this->findComments($id),
-            'is_favorite' => $this->isFavorite($id)
+            'is_favorite' => $this->isFavorite($id),
+            'authors' => $this->findAuthor($id)
         ]);
     }
 
@@ -299,10 +314,36 @@ class BookController extends Controller
             $comments[] = Comment::findOne(['id' => $cb['commnet_id']]);
         }
 
-        if ($comments !== null) {
+        if (!empty($comments)) {
             return $comments;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    /**
+     * Finds the Authors model based on Book id value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Authors the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findAuthor($id)
+    {
+        //if (($reviews = Review::find()->innerJoinWith(ReviewsBooks::tableName())->where([ReviewsBooks::tableName().'.book_id' => 1])->all())!== null) {
+        $authorsBooks = AuthorsBooks::findAll(['book_id' => $id]);
+        $authors = [];
+        foreach ($authorsBooks as $ab)
+        {
+
+            $authors[] = Author::findOne(['id' => $ab['author_id']]);
+        }
+
+        if (!empty($authors)) {
+            return $authors;
+        } else {
+            return $authors;
+            //throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
 

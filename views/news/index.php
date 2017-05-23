@@ -31,7 +31,7 @@ $dataProvider = new ActiveDataProvider([
 
     <div style="display: inline-block;width: 100%;">
 
-        <div class="search-book-form" >
+        <div class="search-news-form" >
             <?php
             $form = ActiveForm::begin();
             $form->enableClientValidation = false;

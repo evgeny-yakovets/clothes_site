@@ -12,6 +12,7 @@ use app\models\Comment;
 /* @var $reviews app\models\Review */
 /* @var $comments app\models\Comment */
 /* @var $is_favorite bool*/
+/* @var $authors array*/
 
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Книги', 'url' => ['index']];
@@ -20,21 +21,21 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="book-view">
     <div style="display: inline-block;">
         <div style="float: left;"><h1><?= Html::encode($this->title) ?></h1></div>
-        <div style="float: left;vertical-align: bottom;margin-top: 30px;margin-left: 10px;">
         <?php
 
         if (!Yii::$app->user->isGuest)
         {
+            echo '<div style="float: left;vertical-align: bottom;margin-top: 30px;margin-left: 10px;">';
             $button_text = '';
             $action_value = '';
 
             if($is_favorite)
             {
-                $button_text = 'Remove from favorites';
+                $button_text = 'Убрать из любимых';
                 $action_value = 'remove-favorite?id='.$model->id;
             }
             else{
-                $button_text = 'Make favorite';
+                $button_text = 'Добавить в любимые';
                 $action_value = 'add-favorite?id='.$model->id;
             }
 
@@ -50,11 +51,26 @@ $this->params['breadcrumbs'][] = $this->title;
             $form->end();
 
 
-
+            echo '</div>';
+            echo '<br>';
         }
         ?>
-        </div>
+
     </div>
+    <?php
+    if(!empty($authors)) {
+        echo '<div>';
+        echo Html::Label("Авторы: ");
+        echo "<br>";
+        $str = "";
+        foreach ($authors as $author) {
+            $str .= '<p>'.$author['name'].'</p>,';
+        }
+
+        echo substr($str,0,-1);
+        echo '</div>';
+    }
+    ?>
     <p>
     <?php
         $visibility = false;
@@ -93,8 +109,8 @@ $this->params['breadcrumbs'][] = $this->title;
     ]) ?>
 
     <?php
-        if($files !== null) {
-            echo Html::Label("Files: ");
+        if(!empty($files)) {
+            echo Html::Label("Файлы: ");
 
             foreach ($files as $file) {
                 echo "<br>";
@@ -106,7 +122,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php
         if($files != null) {
             echo "<br><br><br>";
-            echo Html::Label("Reviews: ");
+            echo Html::Label("Рецензии: ");
 
             foreach ($reviews as $review) {
                 echo "<p>$review->title</p>";
@@ -139,7 +155,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php
     if($comments != null) {
-        echo Html::Label("Comments: ");
+        echo Html::Label("Комментарии: ");
 
         foreach ($comments as $comment) {
             echo "<p>$comment->author, $comment->date: </p> ";

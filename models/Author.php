@@ -43,10 +43,10 @@ class Author extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'born' => 'Born',
-            'death' => 'Death',
-            'description' => 'Description',
+            'name' => 'Имя',
+            'born' => 'Родился',
+            'death' => 'Умер',
+            'description' => 'Описание',
         ];
     }
 }
