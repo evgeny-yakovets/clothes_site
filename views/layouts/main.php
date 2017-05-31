@@ -94,7 +94,7 @@ AppAsset::register($this);
                 ['label' => 'Сборники', 'url' => ['/series/index']],
                 //['label' => 'Сборники и книги и авторы', 'url' => ['/series-books-authors/index'], 'visible'=>$visibility],
                 ['label' => 'Новости', 'url' => ['/news/index']],
-                ['label' => 'Работы', 'url' => ['/style/index'], 'visible'=>$visibility],
+                //['label' => 'Работы', 'url' => ['/style/index'], 'visible'=>$visibility],
                 ['label' => 'О нас', 'url' => ['/site/about']],
                 ['label' => 'Контакты', 'url' => ['/site/contact']],
                 ['label' => 'Выйти', 'url'=> ['/site/logout'], 'linkOptions' => ['data-method' => 'post'], 'visible'=>$visibility]

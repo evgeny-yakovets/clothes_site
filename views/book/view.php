@@ -73,16 +73,7 @@ $this->params['breadcrumbs'][] = $this->title;
     ?>
     <p>
     <?php
-        $visibility = false;
-
-        if (Yii::$app->user->isGuest)
-        {
-            $visibility = !Yii::$app->user->isGuest;
-        }
-        else
-        {
-            $visibility = Yii::$app->user->identity['type'] == 'admin' ? true : false;
-        }
+        $visibility = Yii::$app->user->identity['type'] == 'admin' ? true : false;
 
         if($visibility)
         {
@@ -109,7 +100,7 @@ $this->params['breadcrumbs'][] = $this->title;
     ]) ?>
 
     <?php
-        if(!empty($files)) {
+        if(isset($files)) {
             echo Html::Label("Файлы: ");
 
             foreach ($files as $file) {
@@ -120,7 +111,7 @@ $this->params['breadcrumbs'][] = $this->title;
     ?>
 
     <?php
-        if($files != null) {
+        if(isset($reviews)) {
             echo "<br><br><br>";
             echo Html::Label("Рецензии: ");
 
@@ -128,30 +119,31 @@ $this->params['breadcrumbs'][] = $this->title;
                 echo "<p>$review->title</p>";
 
                 echo "<p>$review->text</p>";
-                echo "<p>$review->author, $review->date, from $review->review_link</p> ";
+                echo "<p>$review->author, $review->date, взято: $review->review_link</p> ";
             }
         }
     ?>
 
-    <div class="comment-form">
+
 
         <?php
 
             echo "<br><br><br>";
+            if(!Yii::$app->user->isGuest)
+            {
+                $form = ActiveForm::begin();
+                $newComment = new Comment();
 
-            $form = ActiveForm::begin();
-            $newComment = new Comment();
+                echo '<div class="comment-form">';
+                echo $form->field($newComment, 'text')->textarea(['rows' => 4, 'cols' => 100]);
+                echo '<div class="form-group">';
+                echo Html::submitButton('Добавить', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']);
+                echo '</div>';
+                echo ActiveForm::end();
+                echo '</div>';
+            }
         ?>
 
-        <?= $form->field($newComment, 'text')->textarea(['rows' => 4, 'cols' => 100]) ?>
-
-        <div class="form-group">
-            <?= Html::submitButton('Добавить', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-        </div>
-
-        <?php ActiveForm::end(); ?>
-
-    </div>
 
     <?php
     if($comments != null) {

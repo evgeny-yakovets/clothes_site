@@ -86,9 +86,6 @@ class BookController extends Controller
             'sort' => [
                 'attributes'=>['title','year']
             ],
-            'pagination' => [
-                'pageSize' => 20,
-            ],
         ]);
 
         return $this->render('index', [
